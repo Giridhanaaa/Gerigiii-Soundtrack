@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0810">
+
+<title>gerigiii</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    background: #08070b;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.music-page {
+    width: 100%;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 20% 0%,
+            rgba(125, 70, 170, 0.12),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(90, 45, 130, 0.08),
+            transparent 35%
+        ),
+        #08070b;
+
+    padding: 22px 16px 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.brand {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.brand-name {
+    font-size: 23px;
+    font-weight: 500;
+    letter-spacing: 7px;
+}
+
+.brand-sub {
+    margin-top: 7px;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: #756d7c;
+}
+
+/* =========================
+   COVER
+========================= */
+
+.cover {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+    border-radius: 15px;
+
+    background: #17131b;
+
+    box-shadow:
+        0 18px 50px rgba(0,0,0,.55),
+        0 0 35px rgba(130,70,170,.08);
+}
+
+.cover img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    display: block;
+}
+
+/* =========================
+   SONG INFO
+========================= */
+
+.song-info {
+    margin-top: 19px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.song-title {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.artist {
+    margin-top: 6px;
+    color: #a39aa9;
+    font-size: 14px;
+}
+
+.favorite {
+    border: none;
+    background: transparent;
+
+    color: #aaa1ad;
+
+    font-size: 27px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    padding: 3px;
+}
+
+.favorite.active {
+    color: #b45cff;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-area {
+    margin-top: 23px;
+}
+
+.time-row {
+    display: flex;
+    justify-content: space-between;
+
+    color: #827986;
+
+    font-size: 11px;
+
+    margin-bottom: 8px;
+}
+
+.progress-container {
+    width: 100%;
+    height: 5px;
+
+    border-radius: 20px;
+
+    background: #2d2930;
+
+    cursor: pointer;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+
+    border-radius: 20px;
+
+    background: #a855f7;
+
+    transition: width .05s linear;
+}
+
+/* =========================
+   MAIN CONTROLS
+========================= */
+
+.controls {
+    margin-top: 23px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 24px;
+}
+
+.control {
+    width: 44px;
+    height: 44px;
+
+    border: none;
+    background: transparent;
+
+    color: #fff;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play {
+    width: 64px;
+    height: 64px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #a855f7;
+
+    color: white;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow:
+        0 8px 28px rgba(168,85,247,.25);
+
+    transition: transform .15s;
+}
+
+.play:active {
+    transform: scale(.94);
+}
+
+/* =========================
+   VOLUME
+========================= */
+
+.volume {
+    margin-top: 19px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.volume-icon {
+    color: #8f8794;
+    font-size: 15px;
+}
+
+.volume input {
+    width: 100%;
+
+    accent-color: #a855f7;
+}
+
+/* =========================
+   PLAYLIST
+========================= */
+
+.playlist {
+    margin-top: 34px;
+}
+
+.playlist-heading {
+    color: #6f6675;
+
+    font-size: 10px;
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 11px;
+}
+
+.track {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px;
+
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background .2s,
+        transform .15s;
+
+    margin-bottom: 4px;
+}
+
+.track:hover {
+    background: rgba(255,255,255,.035);
+}
+
+.track:active {
+    transform: scale(.985);
+}
+
+.track.active {
+    background: rgba(168,85,247,.12);
+}
+
+.track-cover {
+    width: 51px;
+    height: 51px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    flex-shrink: 0;
+}
+
+.track-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.track-title {
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    margin-top: 4px;
+
+    font-size: 11px;
+
+    color: #7e7584;
+}
+
+.track-duration {
+    font-size: 11px;
+    color: #807685;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    margin-top: 35px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #5c5561;
+
+    font-size: 9px;
+    letter-spacing: 5px;
+
+    text-align: center;
+}
+
+.footer::before,
+.footer::after {
+    content: "";
+
+    height: 1px;
+
+    background: #27222b;
+
+    flex: 1;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .music-page {
+        padding:
+            18px
+            14px
+            32px;
+    }
+
+    .brand {
+        margin-bottom: 21px;
+    }
+
+    .brand-name {
+        font-size: 21px;
+        letter-spacing: 6px;
+    }
+
+    .song-title {
+        font-size: 20px;
+    }
+
+    .controls {
+        gap: 17px;
+    }
+
+}
+
+/* =========================
+   SMALL PHONE
+========================= */
+
+@media (max-width: 350px) {
+
+    .music-page {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .track-cover {
+        width: 46px;
+        height: 46px;
+    }
+
+    .controls {
+        gap: 10px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="music-page">
+
+<div class="container">
+
+<!-- BRAND -->
+
+<div class="brand">
+
+    <div class="brand-name">
+        gerigiii
+    </div>
+
+    <div class="brand-sub">
+        MUSIC
+    </div>
+
+</div>
+
+
+<!-- COVER -->
+
+<div class="cover">
+
+    <img
+        id="mainCover"
+        src="cover/remember-me.jpg"
+        alt="Remember Me"
+    >
+
+</div>
+
+
+<!-- SONG INFORMATION -->
+
+<div class="song-info">
+
+    <div>
+
+        <div
+            class="song-title"
+            id="songTitle"
+        >
+            Remember Me - G20
+        </div>
+
+        <div
+            class="artist"
+            id="artistName"
+        >
+            Gerigiii
+        </div>
+
+    </div>
+
+    <button
+        class="favorite"
+        id="favorite"
+        onclick="toggleFavorite()"
+        aria-label="Favorite"
+    >
+        ♡
+    </button>
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="progress-area">
+
+    <div class="time-row">
+
+        <span id="currentTime">
+            0:00
+        </span>
+
+        <span id="totalTime">
+            0:00
+        </span>
+
+    </div>
+
+    <div
+        class="progress-container"
+        id="progressContainer"
+    >
+
+        <div
+            class="progress-bar"
+            id="progressBar"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- CONTROLS -->
+
+<div class="controls">
+
+    <button
+        class="control"
+        onclick="previousTrack()"
+        aria-label="Previous"
+    >
+        ⏮
+    </button>
+
+    <button
+        class="play"
+        id="playButton"
+        onclick="togglePlay()"
+        aria-label="Play"
+    >
+        ▶
+    </button>
+
+    <button
+        class="control"
+        onclick="nextTrack()"
+        aria-label="Next"
+    >
+        ⏭
+    </button>
+
+</div>
+
+
+<!-- VOLUME -->
+
+<div class="volume">
+
+    <span class="volume-icon">
+        🔊
+    </span>
+
+    <input
+        id="volumeSlider"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.8"
+    >
+
+</div>
+
+
+<!-- PLAYLIST -->
+
+<div class="playlist">
+
+    <div class="playlist-heading">
+        Tracks
+    </div>
+
+
+    <!-- G20 -->
+
+    <div
+        class="track active"
+        id="track0"
+        onclick="selectTrack(0)"
+    >
+
+        <img
+            class="track-cover"
+            src="cover/remember-me.jpg"
+            alt=""
+        >
+
+        <div class="track-info">
+
+            <div class="track-title">
+                Remember Me - G20
+            </div>
+
+            <div class="track-artist">
+                Gerigiii
+            </div>
+
+        </div>
+
+        <div
+            class="track-duration"
+            id="duration0"
+        >
+            0:00
+        </div>
+
+    </div>
+
+
+    <!-- G5 -->
+
+    <div
+        class="track"
+        id="track1"
+        onclick="selectTrack(1)"
+    >
+
+        <img
+            class="track-cover"
+            src="cover/remember-me.jpg"
+            alt=""
+        >
+
+        <div class="track-info">
+
+            <div class="track-title">
+                G5 - ...
+            </div>
+
+            <div class="track-artist">
+                Gerigiii
+            </div>
+
+        </div>
+
+        <div
+            class="track-duration"
+            id="duration1"
+        >
+            0:00
+        </div>
+
+    </div>
+
+
+    <!-- G11 -->
+
+    <div
+        class="track"
+        id="track2"
+        onclick="selectTrack(2)"
+    >
+
+        <img
+            class="track-cover"
+            src="cover/remember-me.jpg"
+            alt=""
+        >
+
+        <div class="track-info">
+
+            <div class="track-title">
+                G11 - ...
+            </div>
+
+            <div class="track-artist">
+                Gerigiii
+            </div>
+
+        </div>
+
+        <div
+            class="track-duration"
+            id="duration2"
+        >
+            0:00
+        </div>
+
+    </div>
+
+
+    <!-- G13 -->
+
+    <div
+        class="track"
+        id="track3"
+        onclick="selectTrack(3)"
+    >
+
+        <img
+            class="track-cover"
+            src="cover/remember-me.jpg"
+            alt=""
+        >
+
+        <div class="track-info">
+
+            <div class="track-title">
+                G13 - ...
+            </div>
+
+            <div class="track-artist">
+                Gerigiii
+            </div>
+
+        </div>
+
+        <div
+            class="track-duration"
+            id="duration3"
+        >
+            0:00
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+    gerigiii
+</div>
+
+</div>
+</div>
+
+
+<!-- AUDIO -->
+
+<audio
+    id="audio"
+    preload="metadata"
+></audio>
+
+
+<script>
+
+/* =========================================
+   TRACK DATA
+========================================= */
+
+const tracks = [
+
+    {
+        title: "Remember Me - G20",
+        artist: "Gerigiii",
+        cover: "cover/remember-me.jpg",
+        audio: "music/G20.mp3"
+    },
+
+    {
+        title: "G5 - ...",
+        artist: "Gerigiii",
+        cover: "cover/remember-me.jpg",
+        audio: "music/G5.mp3"
+    },
+
+    {
+        title: "G11 - ...",
+        artist: "Gerigiii",
+        cover: "cover/remember-me.jpg",
+        audio: "music/G11.mp3"
+    },
+
+    {
+        title: "G13 - ...",
+        artist: "Gerigiii",
+        cover: "cover/remember-me.jpg",
+        audio: "music/G13.mp3"
+    }
+
+];
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const audio =
+    document.getElementById("audio");
+
+const playButton =
+    document.getElementById("playButton");
+
+const mainCover =
+    document.getElementById("mainCover");
+
+const songTitle =
+    document.getElementById("songTitle");
+
+const artistName =
+    document.getElementById("artistName");
+
+const currentTime =
+    document.getElementById("currentTime");
+
+const totalTime =
+    document.getElementById("totalTime");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const progressContainer =
+    document.getElementById(
+        "progressContainer"
+    );
+
+const volumeSlider =
+    document.getElementById(
+        "volumeSlider"
+    );
+
+const favorite =
+    document.getElementById(
+        "favorite"
+    );
+
+
+let currentTrack = 0;
+
+
+/* =========================================
+   LOAD TRACK
+========================================= */
+
+function loadTrack(index) {
+
+    currentTrack = index;
+
+    const track =
+        tracks[index];
+
+
+    audio.src =
+        track.audio;
+
+
+    mainCover.src =
+        track.cover;
+
+
+    songTitle.textContent =
+        track.title;
+
+
+    artistName.textContent =
+        track.artist;
+
+
+    currentTime.textContent =
+        "0:00";
+
+
+    totalTime.textContent =
+        "0:00";
+
+
+    progressBar.style.width =
+        "0%";
+
+
+    document
+        .querySelectorAll(".track")
+        .forEach(track => {
+
+            track.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const selected =
+        document.getElementById(
+            "track" + index
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active"
+        );
+
+    }
+
+
+    audio.load();
+
+}
+
+
+/* =========================================
+   PLAY / PAUSE
+========================================= */
+
+function togglePlay() {
+
+    if (audio.paused) {
+
+        audio.play()
+            .then(() => {
+
+                playButton.textContent =
+                    "Ⅱ";
+
+            })
+            .catch(error => {
+
+                console.log(
+                    "Playback error:",
+                    error
+                );
+
+            });
+
+    } else {
+
+        audio.pause();
+
+        playButton.textContent =
+            "▶";
+
+    }
+
+}
+
+
+/* =========================================
+   SELECT TRACK
+========================================= */
+
+function selectTrack(index) {
+
+    loadTrack(index);
+
+    audio.play()
+        .then(() => {
+
+            playButton.textContent =
+                "Ⅱ";
+
+        })
+        .catch(() => {
+
+            playButton.textContent =
+                "▶";
+
+        });
+
+}
+
+
+/* =========================================
+   NEXT TRACK
+========================================= */
+
+function nextTrack() {
+
+    let next =
+        currentTrack + 1;
+
+
+    if (
+        next >= tracks.length
+    ) {
+
+        next = 0;
+
+    }
+
+
+    selectTrack(next);
+
+}
+
+
+/* =========================================
+   PREVIOUS TRACK
+========================================= */
+
+function previousTrack() {
+
+    let previous =
+        currentTrack - 1;
+
+
+    if (previous < 0) {
+
+        previous =
+            tracks.length - 1;
+
+    }
+
+
+    selectTrack(previous);
+
+}
+
+
+/* =========================================
+   UPDATE PROGRESS
+========================================= */
+
+audio.addEventListener(
+    "timeupdate",
+    function() {
+
+        if (!audio.duration) {
+            return;
+        }
+
+
+        const percentage =
+            (
+                audio.currentTime /
+                audio.duration
+            ) * 100;
+
+
+        progressBar.style.width =
+            percentage + "%";
+
+
+        currentTime.textContent =
+            formatTime(
+                audio.currentTime
+            );
+
+    }
+);
+
+
+/* =========================================
+   LOAD DURATION
+========================================= */
+
+audio.addEventListener(
+    "loadedmetadata",
+    function() {
+
+        totalTime.textContent =
+            formatTime(
+                audio.duration
+            );
+
+
+        const durationElement =
+            document.getElementById(
+                "duration" +
+                currentTrack
+            );
+
+
+        if (durationElement) {
+
+            durationElement.textContent =
+                formatTime(
+                    audio.duration
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   CLICK PROGRESS BAR
+========================================= */
+
+progressContainer.addEventListener(
+    "click",
+    function(event) {
+
+        if (!audio.duration) {
+            return;
+        }
+
+
+        const rect =
+            progressContainer
+                .getBoundingClientRect();
+
+
+        const position =
+            event.clientX -
+            rect.left;
+
+
+        const percentage =
+            position /
+            rect.width;
+
+
+        audio.currentTime =
+            percentage *
+            audio.duration;
+
+    }
+);
+
+
+/* =========================================
+   VOLUME
+========================================= */
+
+volumeSlider.addEventListener(
+    "input",
+    function() {
+
+        audio.volume =
+            volumeSlider.value;
+
+    }
+);
+
+
+/* =========================================
+   AUTOMATIC NEXT SONG
+========================================= */
+
+audio.addEventListener(
+    "ended",
+    function() {
+
+        nextTrack();
+
+    }
+);
+
+
+/* =========================================
+   FAVORITE
+========================================= */
+
+function toggleFavorite() {
+
+    favorite.classList.toggle(
+        "active"
+    );
+
+
+    if (
+        favorite.classList.contains(
+            "active"
+        )
+    ) {
+
+        favorite.textContent =
+            "♥";
+
+    } else {
+
+        favorite.textContent =
+            "♡";
+
+    }
+
+}
+
+
+/* =========================================
+   TIME FORMAT
+========================================= */
+
+function formatTime(seconds) {
+
+    if (
+        isNaN(seconds) ||
+        !isFinite(seconds)
+    ) {
+
+        return "0:00";
+
+    }
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    const remaining =
+        Math.floor(
+            seconds % 60
+        );
+
+
+    return (
+        minutes +
+        ":" +
+        String(
+            remaining
+        ).padStart(2, "0")
+    );
+
+}
+
+
+/* =========================================
+   INITIALIZATION
+========================================= */
+
+audio.volume = 0.8;
+
+loadTrack(0);
+
+</script>
+
+</body>
+</html>
