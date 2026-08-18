@@ -874,110 +874,20 @@ body {
 
 <!-- ==================================================
      SPECIAL ALBUM
-     BAGIAN INI TIDAK PERLU DIEDIT
+     EDIT "NAMA ALBUM" UNTUK MENGGANTI JUDUL SECTION
 ================================================== -->
 
 <div class="playlist">
 
     <div class="playlist-heading">
-        Special Album
+        NAMA ALBUM
     </div>
 
-    <div
-        class="track"
-        id="specialAlbum"
-        onclick="openAlbum()"
-    >
-
-        <img
-            class="track-cover"
-            id="albumCover"
-            src="cover/G7.jpg"
-            alt=""
-        >
-
-        <div class="track-info">
-
-            <div
-                class="track-title"
-                id="albumTitle"
-            >
-                NAMA ALBUM
-            </div>
-
-            <div class="track-artist">
-                2 Tracks · Gerigiii
-            </div>
-
-        </div>
-
-        <div class="track-duration">
-            →
-        </div>
-
-    </div>
+    <div id="albumPlaylistContainer"></div>
 
 </div>
 
 
-<!-- ==================================================
-     ALBUM CONTENT
-     AWALNYA TERSEMBUNYI
-================================================== -->
-
-<div
-    id="albumView"
-    style="display:none;"
->
-
-    <div
-        class="playlist-heading"
-        style="margin-top:30px;"
-    >
-        <span
-            onclick="closeAlbum()"
-            style="cursor:pointer;"
-        >
-            ← Back
-        </span>
-    </div>
-
-    <div
-        style="
-            text-align:center;
-            margin:20px 0 25px;
-        "
-    >
-
-        <img
-            id="albumViewCover"
-            src=""
-            alt=""
-            style="
-                width:180px;
-                height:180px;
-                object-fit:cover;
-                border-radius:12px;
-            "
-        >
-
-        <div
-            id="albumViewTitle"
-            style="
-                margin-top:15px;
-                font-size:20px;
-                font-weight:600;
-            "
-        >
-        </div>
-
-    </div>
-
-    <div id="albumTracks"></div>
-
-</div>
-
-    
 <!-- =========================
      FOOTER
 ========================= -->
@@ -1107,7 +1017,7 @@ const tracks = [
    EDIT BAGIAN INI SAJA UNTUK MENGGANTI ALBUM
 ================================================== */
 
-const track = {
+const album = {
 
     // EDIT: Nama album
     title: "...",
@@ -1142,6 +1052,174 @@ const track = {
     ]
 
 };
+
+
+/* ==================================================
+   SPECIAL ALBUM
+   EDIT BAGIAN INI SAJA UNTUK G7 DAN G9
+================================================== */
+
+const albumTracks = [
+
+    {
+        // EDIT: Judul lagu G7
+        title:
+            "JUDUL G7",
+
+        artist:
+            "Gerigiii",
+
+        cover:
+            "cover/G7.jpg",
+
+        audio:
+            "music/G7.mp3"
+
+    },
+
+
+    {
+        // EDIT: Judul lagu G9
+        title:
+            "JUDUL G9",
+
+        artist:
+            "Gerigiii",
+
+        cover:
+            "cover/G9.jpg",
+
+        audio:
+            "music/G9.mp3"
+
+    }
+
+];
+
+
+/* ==================================================
+   SPECIAL ALBUM PLAYLIST
+   Menggunakan player utama yang sama
+================================================== */
+
+function createAlbumPlaylist() {
+
+    const container =
+        document.getElementById(
+            "albumPlaylistContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    albumTracks.forEach(
+        function(track) {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "track";
+
+
+            element.innerHTML = `
+
+                <img
+                    class="track-cover"
+                    src="${track.cover}"
+                    alt=""
+                >
+
+
+                <div class="track-info">
+
+                    <div class="track-title">
+
+                        ${track.title}
+
+                    </div>
+
+
+                    <div class="track-artist">
+
+                        ${track.artist}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            element.addEventListener(
+                "click",
+                function() {
+
+                    audio.src =
+                        track.audio;
+
+
+                    mainCover.src =
+                        track.cover;
+
+
+                    songTitle.textContent =
+                        track.title;
+
+
+                    artistName.textContent =
+                        track.artist;
+
+
+                    progressBar.style.width =
+                        "0%";
+
+
+                    currentTime.textContent =
+                        "0:00";
+
+
+                    totalTime.textContent =
+                        "0:00";
+
+
+                    audio.load();
+
+
+                    audio.play()
+                        .then(
+                            function() {
+
+                                playButton.textContent =
+                                    "Ⅱ";
+
+                            }
+                        )
+                        .catch(
+                            function() {
+
+                                playButton.textContent =
+                                    "▶";
+
+                            }
+                        );
+
+                }
+            );
+
+
+            container.appendChild(
+                element
+            );
+
+        }
+    );
+
+}
 
 
 /* ==================================================
@@ -1730,9 +1808,14 @@ function formatTime(
 audio.volume = 0.8;
 
 
-/* Buat playlist */
+/* Buat playlist utama */
 
 createPlaylist();
+
+
+/* Buat playlist album */
+
+createAlbumPlaylist();
 
 
 /* Load lagu pertama */
