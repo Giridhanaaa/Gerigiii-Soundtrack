@@ -176,6 +176,50 @@ body {
 
 }
 
+/* =========================
+   MAIN COVER / VIDEO
+========================= */
+
+.main-cover-wrapper {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    border-radius: 15px;
+
+    background: #17131b;
+
+    box-shadow:
+
+        0 18px 50px
+        rgba(0,0,0,.55),
+
+        0 0 35px
+        rgba(130,70,170,.08);
+
+}
+
+.main-cover {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+#mainVideo {
+
+    display: none;
+
+}
+
 
 /* =========================
    SONG INFO
@@ -1137,22 +1181,31 @@ function createAlbumPlaylist() {
             "albumPlaylistContainer"
         );
 
-
     container.innerHTML = "";
 
-
     albumTracks.forEach(
-        function(track) {
+        function(track, index) {
 
             const element =
                 document.createElement(
                     "div"
                 );
 
-
             element.className =
                 "track";
 
+            element.id =
+                "albumTrack" + index;
+
+            element.onclick =
+                function() {
+
+                    selectTrack(
+                        index,
+                        albumTracks
+                    );
+
+                };
 
             element.innerHTML = `
 
@@ -1162,7 +1215,6 @@ function createAlbumPlaylist() {
                     alt=""
                 >
 
-
                 <div class="track-info">
 
                     <div class="track-title">
@@ -1170,7 +1222,6 @@ function createAlbumPlaylist() {
                         ${track.title}
 
                     </div>
-
 
                     <div class="track-artist">
 
@@ -1180,65 +1231,16 @@ function createAlbumPlaylist() {
 
                 </div>
 
+                <div
+                    class="track-duration"
+                    id="albumDuration${index}"
+                >
+
+                    0:00
+
+                </div>
+
             `;
-
-
-            element.addEventListener(
-                "click",
-                function() {
-
-                    audio.src =
-                        track.audio;
-
-
-                    mainCover.src =
-                        track.cover;
-
-
-                    songTitle.textContent =
-                        track.title;
-
-
-                    artistName.textContent =
-                        track.artist;
-
-
-                    progressBar.style.width =
-                        "0%";
-
-
-                    currentTime.textContent =
-                        "0:00";
-
-
-                    totalTime.textContent =
-                        "0:00";
-
-
-                    audio.load();
-
-
-                    audio.play()
-                        .then(
-                            function() {
-
-                                playButton.textContent =
-                                    "Ⅱ";
-
-                            }
-                        )
-                        .catch(
-                            function() {
-
-                                playButton.textContent =
-                                    "▶";
-
-                            }
-                        );
-
-                }
-            );
-
 
             container.appendChild(
                 element
@@ -1412,6 +1414,8 @@ if (track.video) {
     mainVideo.currentTime =
         0;
 
+    mainVideo.load();
+
     mainVideo.play()
         .catch(() => {});
 
@@ -1468,7 +1472,9 @@ if (track.video) {
 
     const selected =
         document.getElementById(
-            "track" + index
+            currentPlaylist === albumTracks
+                ? "albumTrack" + index
+                : "track" + index
         );
 
     if (selected) {
@@ -1574,7 +1580,10 @@ function nextTrack() {
     }
 
 
-    selectTrack(next);
+    selectTrack(
+        next,
+        currentPlaylist
+    );
 
 }
 
@@ -1599,7 +1608,10 @@ function previousTrack() {
     }
 
 
-    selectTrack(previous);
+    selectTrack(
+        previous,
+        currentPlaylist
+    );
 
 }
 
@@ -1657,8 +1669,9 @@ audio.addEventListener(
 
         const durationElement =
             document.getElementById(
-                "duration" +
-                currentTrack
+                currentPlaylist === albumTracks
+                    ? "albumDuration" + currentTrack
+                    : "duration" + currentTrack
             );
 
 
