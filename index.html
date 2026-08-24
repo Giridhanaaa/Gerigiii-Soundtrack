@@ -704,13 +704,21 @@ body {
      MAIN COVER
 ========================= -->
 
-<div class="cover">
+<div class="main-cover-wrapper">
 
     <img
         id="mainCover"
-        src="cover/remember-me.jpg"
-        alt="Album Cover"
-    >
+        class="main-cover"
+        src=""
+        alt=""
+    ><video
+        id="mainVideo"
+        class="main-cover"
+        muted
+        loop
+        playsinline
+        preload="metadata"
+    ></video>
 
 </div>
 
@@ -1031,6 +1039,9 @@ const albumTracks = [
         cover:
             "cover/G18.jpg",
 
+        video:
+            "cover/G18.mp4",
+
         audio:
             "music/G18.mp3"
 
@@ -1244,76 +1255,43 @@ function createAlbumPlaylist() {
 ================================================== */
 
 const audio =
-    document.getElementById(
-        "audio"
-    );
-
+    document.getElementById("audio");
 
 const playButton =
-    document.getElementById(
-        "playButton"
-    );
-
+    document.getElementById("playButton");
 
 const mainCover =
-    document.getElementById(
-        "mainCover"
-    );
+    document.getElementById("mainCover");
 
+const mainVideo =
+    document.getElementById("mainVideo");
 
 const songTitle =
-    document.getElementById(
-        "songTitle"
-    );
-
+    document.getElementById("songTitle");
 
 const artistName =
-    document.getElementById(
-        "artistName"
-    );
-
+    document.getElementById("artistName");
 
 const currentTime =
-    document.getElementById(
-        "currentTime"
-    );
-
+    document.getElementById("currentTime");
 
 const totalTime =
-    document.getElementById(
-        "totalTime"
-    );
-
+    document.getElementById("totalTime");
 
 const progressBar =
-    document.getElementById(
-        "progressBar"
-    );
-
+    document.getElementById("progressBar");
 
 const progressContainer =
-    document.getElementById(
-        "progressContainer"
-    );
-
+    document.getElementById("progressContainer");
 
 const volumeSlider =
-    document.getElementById(
-        "volumeSlider"
-    );
-
+    document.getElementById("volumeSlider");
 
 const favorite =
-    document.getElementById(
-        "favorite"
-    );
-
+    document.getElementById("favorite");
 
 const playlistContainer =
-    document.getElementById(
-        "playlistContainer"
-    );
-
+    document.getElementById("playlistContainer");
 
 let currentTrack = 0;
 let currentPlaylist = tracks;
@@ -1410,38 +1388,69 @@ function loadTrack(index) {
 
     currentTrack = index;
 
-
     const track =
         currentPlaylist[index];
-
 
     audio.src =
         track.audio;
 
+/* ====================
+   COVER VIDEO / IMAGE
+======================= */
+
+if (track.video) {
+
+    mainCover.style.display =
+        "none";
+
+    mainVideo.style.display =
+        "block";
+
+    mainVideo.src =
+        track.video;
+
+    mainVideo.currentTime =
+        0;
+
+    mainVideo.play()
+        .catch(() => {});
+
+} else {
+
+    mainVideo.pause();
+
+    mainVideo.removeAttribute(
+        "src"
+    );
+
+    mainVideo.load();
+
+    mainVideo.style.display =
+        "none";
+
+    mainCover.style.display =
+        "block";
 
     mainCover.src =
         track.cover;
+
+}
 
 
     songTitle.textContent =
         track.title;
 
-
     artistName.textContent =
         track.artist;
-
 
     currentTime.textContent =
         "0:00";
 
-
     totalTime.textContent =
         "0:00";
 
-
     progressBar.style.width =
         "0%";
-
 
     document
         .querySelectorAll(
@@ -1457,12 +1466,10 @@ function loadTrack(index) {
             }
         );
 
-
     const selected =
         document.getElementById(
             "track" + index
         );
-
 
     if (selected) {
 
@@ -1472,9 +1479,7 @@ function loadTrack(index) {
 
     }
 
-
     audio.load();
-
 }
 
 
