@@ -1316,6 +1316,7 @@ const playlistContainer =
 
 
 let currentTrack = 0;
+let currentPlaylist = tracks;
 
 
 /* ==================================================
@@ -1411,7 +1412,7 @@ function loadTrack(index) {
 
 
     const track =
-        tracks[index];
+        currentPlaylist[index];
 
 
     audio.src =
@@ -1523,10 +1524,10 @@ function togglePlay() {
    SELECT TRACK
 ================================================== */
 
-function selectTrack(index) {
+function selectTrack(index, playlist = tracks) {
 
+    currentPlaylist = playlist;
     loadTrack(index);
-
 
     audio.play()
         .then(
@@ -1560,7 +1561,7 @@ function nextTrack() {
 
 
     if (
-        next >= tracks.length
+        next >= currentPlaylist.length
     ) {
 
         next = 0;
@@ -1588,7 +1589,7 @@ function previousTrack() {
     ) {
 
         previous =
-            tracks.length - 1;
+            currentPlaylist.length - 1;
 
     }
 
@@ -1824,23 +1825,14 @@ function formatTime(
 
 audio.volume = 0.8;
 
-
 /* Buat playlist utama */
-
 createPlaylist();
 
-
 /* Buat playlist album */
-
 createAlbumPlaylist();
 
-
 /* Load lagu pertama */
-
-loadTrack(0);
-
-
-    
+loadTrack(0);    
     
 </script>
 
